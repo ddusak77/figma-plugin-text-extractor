@@ -1,3 +1,10 @@
+Leaving this README as it is for posterity, just wanted to add
+to generate the plugin code simply:
+1. npm install
+2. npm build (will generate the code.js file needed for the plugin to operate)
+3. import the plugin into your figma desktop app
+
+
 Below are the steps to get your plugin running. You can also find instructions at:
 
   https://www.figma.com/plugin-docs/setup/
