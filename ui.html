@@ -1,0 +1,62 @@
+<div class='container'>
+	<button id='post'>Send text to server</button>
+	<button id='get' disabled>Pull text from server</button>
+	<div id='apiResponseText'></div>
+</div>
+<script>
+document.getElementById('post').onclick = () => {
+  	parent.postMessage({ pluginMessage: { type: 'post' }}, '*')
+}
+
+document.getElementById('get').onclick = () => {
+  	parent.postMessage({ pluginMessage: { type: 'get' } }, '*')
+}
+
+onmessage = (event) => {
+
+  	if(event.data.pluginMessage.type === 'postDocumentText') {
+		ajaxRequest('POST', {project:event.data.pluginMessage.data}, function(err, response){
+			document.getElementById('apiResponseText').innerText = response.message;
+			document.getElementById("get").disabled  = false;
+		});
+	} else if(event.data.pluginMessage.type === 'getDocumentText') {
+		ajaxRequest('GET', {name:event.data.pluginMessage.name}, function(err, response){
+			document.getElementById('apiResponseText').innerText = response.message;
+			if(response.status === 'success') {
+				window.parent.postMessage({pluginMessage: {type: 'textNodeReplace', data: response}}, '*')
+				document.getElementById("get").disabled  = true;
+			}
+		});
+
+	}
+}
+
+function ajaxRequest(type, data, callback) {
+	var serverUrl = 'http://localhost:3000/documentText',
+		request = new XMLHttpRequest(),
+		postBody = null;
+
+	if(type === 'GET') {
+		serverUrl += '?' + new URLSearchParams(data).toString();
+	}
+
+	if(type === 'POST') {
+		postBody = JSON.stringify(data);
+	}
+
+	request.open(type, serverUrl)
+	request.setRequestHeader('Content-Type','application/json');
+	request.onload = function() {
+		let parsedResponse = JSON.parse(request.response);
+        callback(null, parsedResponse);
+    };
+	request.send(postBody)
+}
+
+</script>
+
+<style>
+	#apiResponseText {
+		margin: 20px;
+	}
+</style>

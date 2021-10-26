@@ -1,0 +1,17 @@
+{
+  "name": "Text-extractor--randomizer",
+  "version": "1.0.0",
+  "description": "Your Figma plugin",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "eslint": "^8.1.0"
+  }
+}

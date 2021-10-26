@@ -1,0 +1,10 @@
+{
+  "name": "Text extractor + randomizer",
+  "id": "1033142619884742860",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html"
+}
